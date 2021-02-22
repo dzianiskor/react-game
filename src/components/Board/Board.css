@@ -1,0 +1,14 @@
+.table-image-wrapper {
+    margin-top: 10px;
+}
+
+.table-image {
+    width: 1320px;
+    height: 768px;
+    margin: auto;
+    background: no-repeat center center;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}

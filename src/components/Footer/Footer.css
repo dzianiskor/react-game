@@ -1,0 +1,36 @@
+footer {
+    color: gold;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px auto;
+    width: 1320px;
+}
+.footer-links {
+    display: flex;
+    align-items: center;
+}
+
+.footer-links span {
+    margin-right: 20px;
+}
+
+footer a {
+    text-decoration: none;
+    color: gold;
+}
+
+
+.setting-button img {
+    width: 25px;
+    height: 25px;
+    filter: invert();
+}
+
+.setting-button {
+    background-color: #ff9700;
+}
+
+.setting-button:focus, .setting-button:active {
+    box-shadow: 0 0 0 0.25rem rgba(248, 148, 6,.25);
+}

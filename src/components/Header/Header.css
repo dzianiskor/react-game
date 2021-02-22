@@ -1,0 +1,35 @@
+header {
+    width: 1320px;
+    margin: auto;
+}
+
+header .score {
+    text-align: right;
+    color: gold;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 20px;
+    position: relative;
+}
+
+header .avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+header .avatar-border img {
+    width: 500px;
+    height: auto;
+    position: absolute;
+    right: 0;
+    top: -20px;
+    filter: invert(68%) sepia(59%) saturate(4020%) hue-rotate(360deg) brightness(103%) contrast(106%);
+}
+
+header .score-count {
+    padding-right: 160px;
+}
