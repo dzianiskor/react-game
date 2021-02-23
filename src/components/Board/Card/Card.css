@@ -1,9 +1,92 @@
 .g-card {
     margin: 10px;
     cursor: pointer;
+    position: relative;
+    perspective: 1000px;
+    width: 166px;
 }
 
 .g-card img {
     width: 166px;
     height: 230px;
+    transition: 0.5s;
+}
+
+.g-card img:hover {
+    filter: drop-shadow(0 0 3px rgb(255, 255, 255));
+    transform: scale3d(1.07, 1.07, 1.07);
+}
+
+.g-card .front, .g-card .back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: 1s;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.g-card .back {
+    transform: rotateY(180deg);
+}
+
+.g-card.clicked .back {
+    transform: scale3d(1.3, 1.3, 1.3) rotateY(360deg);
+}
+
+.g-card.clicked .front {
+    animation: front-clicked 1s linear 1 normal running 0s none;
+    visibility: hidden;
+}
+
+.g-card.success-card .back {
+    transform: rotateY(360deg);
+    animation: success 2s linear 1 normal running 0s none;
+}
+
+.g-card.success-card .front {
+    visibility: hidden;
+}
+
+.g-card.fail-card .front {
+    transform: rotateY(360deg);
+}
+
+.g-card.fail-card .back {
+    animation: fail 1s linear 1 normal running 0s none;
+}
+
+@keyframes success {
+    0% {
+        transform: scale3d(1.3, 1.3, 1.3);
+        filter: drop-shadow(0 0 10px rgb(0, 128, 0));
+    }
+    50% {
+        transform: scale3d(1.4, 1.4, 1.4);
+    }
+    100% {
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+@keyframes front-clicked {
+    0% {
+        transform: scale3d(1, 1, 1) rotateY(0);
+    }
+    100% {
+        transform: scale3d(1.3, 1.3, 1.3) rotateY(180deg);
+    }
+}
+
+@keyframes fail {
+    0% {
+        transform: scale3d(1.3, 1.3, 1.3) rotateY(0);
+    }
+    100% {
+        transform: scale3d(1, 1, 1) rotateY(180deg);
+    }
 }
