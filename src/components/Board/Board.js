@@ -1,37 +1,82 @@
 import './Board.css'
 import Card from './Card/Card'
+import GuardBoard from './GuardBoard/GuardBoard'
+import {useState} from 'react'
 
 const Board = (props) => {
 
-    const cards = [
-        {id: 1, cardId: 1, type: "wrappers"},
-        {id: 2, cardId: 1, type: "wrappers"},
-        {id: 3, cardId: 2, type: "heroes"},
-        {id: 4, cardId: 2, type: "heroes"},
-        {id: 5, cardId: 3, type: "heroes"},
-        {id: 6, cardId: 3, type: "heroes"},
-        {id: 7, cardId: 4, type: "heroes"},
-        {id: 8, cardId: 4, type: "heroes"},
-        {id: 9, cardId: 5, type: "heroes"},
-        {id: 10, cardId: 5, type: "heroes"},
-        {id: 11, cardId: 6, type: "heroes"},
-        {id: 12, cardId: 6, type: "heroes"},
-        {id: 13, cardId: 7, type: "heroes"},
-        {id: 14, cardId: 7, type: "heroes"},
-        {id: 15, cardId: 8, type: "heroes"},
-        {id: 16, cardId: 8, type: "heroes"},
-        {id: 17, cardId: 9, type: "heroes"},
-        {id: 18, cardId: 9, type: "heroes"},
-        {id: 19, cardId: 10, type: "heroes"},
-        {id: 20, cardId: 10, type: "heroes"}
-    ]
+    const [cards, setCards] = useState([
+        {id: 1, cardId: 1, status: ''},
+        {id: 2, cardId: 1, status: ''},
+        {id: 3, cardId: 2, status: ''},
+        {id: 4, cardId: 2, status: ''},
+        {id: 5, cardId: 3, status: ''},
+        {id: 6, cardId: 3, status: ''},
+        {id: 7, cardId: 4, status: ''},
+        {id: 8, cardId: 4, status: ''},
+        {id: 9, cardId: 5, status: ''},
+        {id: 10, cardId: 5, status: ''},
+        {id: 11, cardId: 6, status: ''},
+        {id: 12, cardId: 6, status: ''},
+        {id: 13, cardId: 7, status: ''},
+        {id: 14, cardId: 7, status: ''},
+        {id: 15, cardId: 8, status: ''},
+        {id: 16, cardId: 8, status: ''},
+        {id: 17, cardId: 9, status: ''},
+        {id: 18, cardId: 9, status: ''},
+        {id: 19, cardId: 10, status: ''},
+        {id: 20, cardId: 10, status: ''}
+    ])
+    const [compareCard, setCompareCard] = useState('')
+    const [guardBoardAllowed, setGuardBoardAllowed] = useState(true)
+
+    function changeStatus(id, status) {
+        const newCards = [...cards];
+        newCards.forEach((card, index) => {
+            if (card.id === id || card.status === 'clicked') {
+                newCards[index] = {...newCards[index], status}
+            }
+        })
+        if (status === 'clicked') {
+            setCards(() => newCards)
+        } else {
+            setTimeout(() => {
+                setCards(() => newCards)
+            }, 1000)
+        }
+        setTimeout(() => {
+            setGuardBoardAllowed(true)
+        }, 1000)
+    }
+
+    function compareCardsHandler({id, cardId}) {
+        setGuardBoardAllowed(false)
+        changeStatus(id, 'clicked')
+        if (!compareCard || compareCard.id === id) {
+            setCompareCard({id, cardId})
+        } else if (compareCard.cardId === cardId) {
+            changeStatus(id, 'success-card')
+            setCompareCard('')
+        } else {
+            changeStatus(id, 'fail-card')
+            setCompareCard('')
+        }
+    }
 
     return (
         <div className="table-image-wrapper">
             <div className="table-image" style={{backgroundImage: `url("/img/tables/${props.typeBoard}.jpg")`}}>
-                {cards.map(card => (
-                    <Card key={card.id} type={card.type} cardId={card.cardId}/>
-                ))}
+                <GuardBoard guardAllowed={guardBoardAllowed}>
+                    {cards.map(card => (
+                        <Card
+                            key={card.id}
+                            id={card.id}
+                            cardId={card.cardId}
+                            status={card.status}
+                            compareCard={compareCardsHandler}
+                        />
+                    ))}
+                </GuardBoard>
             </div>
         </div>
     )

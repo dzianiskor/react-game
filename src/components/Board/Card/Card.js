@@ -1,7 +1,7 @@
 import './Card.css'
 
 const Card = (props) => {
-    const pathHero = `/img/${props.type}/${props.cardId}.png`
+    const pathHero = `/img/heroes/${props.cardId}.png`
     const pathWrapper = `/img/wrappers/1.png`
 
     const classes = ['g-card']  // clicked, success-card, fail-card
@@ -10,7 +10,7 @@ const Card = (props) => {
     }
 
     return (
-        <div className={classes.join(' ')} onClick={props.compareCard}>
+        <div className={classes.join(' ')} onClick={() => props.compareCard(props)}>
             <div className="front">
                 <img src={pathWrapper} alt="Wrapper"/>
             </div>
