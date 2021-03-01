@@ -2,6 +2,7 @@ import './Settings.css'
 import {getArenaList} from '../../containers/arena/arena'
 import {getTableList} from '../../containers/table/arena'
 import {getWrapperCardList} from '../../containers/wrapperCard/wrapperCard'
+import {getDifficultList} from '../../containers/difficult/difficult'
 
 const Settings = (props) => {
     return (
@@ -52,9 +53,11 @@ const Settings = (props) => {
                 <div className="setting-card">
                     <div>Difficult: </div>
                     <div>
-                        <button>Easy</button>
-                        <button>Normal</button>
-                        <button>Hard</button>
+                        {getDifficultList().map((difficult, index)=>
+                            (props.difficult === difficult.value)
+                                ? <button key={index} className="active">{difficult.name}</button>
+                                : <button key={index} onClick={()=>props.changeDifficult(difficult.value)}>{difficult.name}</button>
+                        )}
                     </div>
                 </div>
                 <div className="setting-card">

@@ -1,39 +1,22 @@
 import './Board.css'
 import Card from './Card/Card'
 import GuardBoard from './GuardBoard/GuardBoard'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import useSound from 'use-sound'
 import successSound from '../../sounds/success.mp3'
 import failSound from '../../sounds/error.mp3'
+import {getStartDeck} from '../../containers/deck/deck'
 
 const Board = (props) => {
     const [playSuccessSound] = useSound(successSound, {volume: props.soundValue});
     const [playFailSound] = useSound(failSound, {volume: props.soundValue});
-
-    const [cards, setCards] = useState([
-        {id: 1, cardId: 1, status: ''},
-        {id: 2, cardId: 1, status: ''},
-        {id: 3, cardId: 2, status: ''},
-        {id: 4, cardId: 2, status: ''},
-        {id: 5, cardId: 3, status: ''},
-        {id: 6, cardId: 3, status: ''},
-        {id: 7, cardId: 4, status: ''},
-        {id: 8, cardId: 4, status: ''},
-        {id: 9, cardId: 5, status: ''},
-        {id: 10, cardId: 5, status: ''},
-        {id: 11, cardId: 6, status: ''},
-        {id: 12, cardId: 6, status: ''},
-        {id: 13, cardId: 7, status: ''},
-        {id: 14, cardId: 7, status: ''},
-        {id: 15, cardId: 8, status: ''},
-        {id: 16, cardId: 8, status: ''},
-        {id: 17, cardId: 9, status: ''},
-        {id: 18, cardId: 9, status: ''},
-        {id: 19, cardId: 10, status: ''},
-        {id: 20, cardId: 10, status: ''}
-    ])
+    const [cards, setCards] = useState(getStartDeck(props.difficult))
     const [compareCard, setCompareCard] = useState('')
     const [guardBoardAllowed, setGuardBoardAllowed] = useState(true)
+
+    useEffect(()=>{
+        setCards(getStartDeck(props.difficult))
+    }, [props.difficult])
 
     function changeStatus(id, status) {
         const newCards = [...cards];

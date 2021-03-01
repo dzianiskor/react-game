@@ -9,11 +9,12 @@ import Settings from './components/Settings/Settings'
 import {getStartArena} from './containers/arena/arena'
 import {getStartTable} from './containers/table/arena'
 import {getStartWrapperCard} from './containers/wrapperCard/wrapperCard'
-import { FullScreen, useFullScreenHandle } from "react-full-screen"
+import {FullScreen, useFullScreenHandle} from "react-full-screen"
 
 
 function App() {
     const fullScreenHandler = useFullScreenHandle();
+    const [difficult, setDifficult] = useState('hard')
     const [typeArena, setTypeArena] = useState(getStartArena())
     const [typeTable, setTypeTable] = useState(getStartTable())
     const [typeWrapperCard, setTypeWrapperCard] = useState(getStartWrapperCard())
@@ -25,41 +26,46 @@ function App() {
 
     const [soundValue, setSoundValue] = useState(0.25)
 
-
-
     useEffect(() => {
         startGame ? playMusic() : stop()
     }, [startGame, playMusic, stop])
 
     return (
         <FullScreen handle={fullScreenHandler}>
-        <div className="App" style={{backgroundImage: `url("/img/backgrounds/${typeArena.path}")`}}>
-            <Header/>
-            {showSettings &&
-                <Settings
-                    hideSettings={() => setShowSettings(false)}
-                    musicValue={musicValue}
-                    changeMusicValue={e => setMusicValue(e.target.value / 100)}
+            <div className="App" style={{backgroundImage: `url("/img/backgrounds/${typeArena.path}")`}}>
+                <Header/>
+                {showSettings &&
+                    <Settings
+                        hideSettings={() => setShowSettings(false)}
+                        musicValue={musicValue}
+                        changeMusicValue={e => setMusicValue(e.target.value / 100)}
+                        soundValue={soundValue}
+                        changeSoundValue={e => setSoundValue(e.target.value / 100)}
+                        typeArena={typeArena}
+                        changeArena={(arena) => setTypeArena(arena)}
+                        typeTable={typeTable}
+                        changeTable={(table) => setTypeTable(table)}
+                        typeWrapperCard={typeWrapperCard}
+                        changeWrapperCard={(wrapper) => setTypeWrapperCard(wrapper)}
+                        difficult={difficult}
+                        changeDifficult={(difficult) => setDifficult(difficult)}
+                    />
+                }
+                <Board
+                    typeBoard={typeTable}
                     soundValue={soundValue}
-                    changeSoundValue={e => setSoundValue(e.target.value / 100)}
-                    typeArena={typeArena}
-                    changeArena={(arena)=>{ setTypeArena(arena) }}
-                    typeTable={typeTable}
-                    changeTable={(table)=>{ setTypeTable(table) }}
                     typeWrapperCard={typeWrapperCard}
-                    changeWrapperCard={(wrapper)=>{ setTypeWrapperCard(wrapper) }}
+                    difficult={difficult}
                 />
-            }
-            <Board typeBoard={typeTable} soundValue={soundValue} typeWrapperCard={typeWrapperCard}/>
-            <button onClick={() => setStartGame(true)}>Start Game</button>
-            <Footer
-                showSettings={() => setShowSettings(true)}
-                stopGame={() => setStartGame(false)}
-                startGame={startGame}
-                fullScreenHandler={fullScreenHandler}
-            />
+                <button onClick={() => setStartGame(true)}>Start Game</button>
+                <Footer
+                    showSettings={() => setShowSettings(true)}
+                    stopGame={() => setStartGame(false)}
+                    startGame={startGame}
+                    fullScreenHandler={fullScreenHandler}
+                />
 
-        </div>
+            </div>
         </FullScreen>
     );
 }
