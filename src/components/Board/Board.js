@@ -80,7 +80,7 @@ const Board = (props) => {
 
     return (
         <div className="table-image-wrapper">
-            <div className="table-image" style={{backgroundImage: `url("/img/tables/${props.typeBoard}.jpg")`}}>
+            <div className="table-image" style={{backgroundImage: `url("/img/tables/${props.typeBoard.path}")`}}>
                 <GuardBoard guardAllowed={guardBoardAllowed}>
                     {cards.map(card => (
                         <Card
@@ -90,6 +90,7 @@ const Board = (props) => {
                             status={card.status}
                             compareCard={compareCardsHandler}
                             volumeValue={props.soundValue}
+                            typeWrapperCard={props.typeWrapperCard}
                         />
                     ))}
                 </GuardBoard>

@@ -18,6 +18,8 @@
     background-color: bisque;
     border-radius: 5%;
     padding: 20px;
+    width: 500px;
+    height: 600px;
 }
 
 .setting-card {

@@ -7,10 +7,13 @@ import useSound from 'use-sound'
 import music from './sounds/music1.mp3'
 import Settings from './components/Settings/Settings'
 import {getStartArena} from './containers/arena/arena'
+import {getStartTable} from './containers/table/arena'
+import {getStartWrapperCard} from './containers/wrapperCard/wrapperCard'
 
 function App() {
     const [typeArena, setTypeArena] = useState(getStartArena())
-    const [tableImage] = useState('1')
+    const [typeTable, setTypeTable] = useState(getStartTable())
+    const [typeWrapperCard, setTypeWrapperCard] = useState(getStartWrapperCard())
     const [startGame, setStartGame] = useState(false)
     const [showSettings, setShowSettings] = useState(false)
 
@@ -36,10 +39,14 @@ function App() {
                     soundValue={soundValue}
                     changeSoundValue={e => setSoundValue(e.target.value / 100)}
                     typeArena={typeArena}
-                    changeArena = {(arena)=>{ setTypeArena(arena) }}
+                    changeArena={(arena)=>{ setTypeArena(arena) }}
+                    typeTable={typeTable}
+                    changeTable={(table)=>{ setTypeTable(table) }}
+                    typeWrapperCard={typeWrapperCard}
+                    changeWrapperCard={(wrapper)=>{ setTypeWrapperCard(wrapper) }}
                 />
             }
-            <Board typeBoard={tableImage} soundValue={soundValue}/>
+            <Board typeBoard={typeTable} soundValue={soundValue} typeWrapperCard={typeWrapperCard}/>
             <button onClick={() => setStartGame(true)}>Start Game</button>
             <Footer
                 showSettings={() => setShowSettings(true)}

@@ -1,5 +1,7 @@
 import './Settings.css'
 import {getArenaList} from '../../containers/arena/arena'
+import {getTableList} from '../../containers/table/arena'
+import {getWrapperCardList} from '../../containers/wrapperCard/wrapperCard'
 
 const Settings = (props) => {
     return (
@@ -22,7 +24,7 @@ const Settings = (props) => {
                     <div>
                         {getArenaList().map((arena)=>
                             (props.typeArena.id === arena.id)
-                                ? <button key={arena.id} className="active" onClick={()=>props.changeArena(arena)}>{arena.name}</button>
+                                ? <button key={arena.id} className="active">{arena.name}</button>
                                 : <button key={arena.id} onClick={()=>props.changeArena(arena)}>{arena.name}</button>
                         )}
                     </div>
@@ -30,9 +32,21 @@ const Settings = (props) => {
                 <div className="setting-card">
                     <div>Type Board: </div>
                     <div>
-                        <button>Type 1</button>
-                        <button>Type 2</button>
-                        <button>Type 3</button>
+                        {getTableList().map((table)=>
+                            (props.typeTable.id === table.id)
+                                ? <button key={table.id} className="active">{table.name}</button>
+                                : <button key={table.id} onClick={()=>props.changeTable(table)}>{table.name}</button>
+                        )}
+                    </div>
+                </div>
+                <div className="setting-card">
+                    <div>Type Wrapper Cards: </div>
+                    <div>
+                        {getWrapperCardList().map((wrapper)=>
+                            (props.typeWrapperCard.id === wrapper.id)
+                                ? <button key={wrapper.id} className="active">{wrapper.name}</button>
+                                : <button key={wrapper.id} onClick={()=>props.changeWrapperCard(wrapper)}>{wrapper.name}</button>
+                        )}
                     </div>
                 </div>
                 <div className="setting-card">

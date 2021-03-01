@@ -8,7 +8,7 @@ const Card = (props) => {
     const [playHoverSound] = useSound(hoverSound, { volume: props.volumeValue });
 
     const pathHero = `/img/heroes/${props.cardId}.png`
-    const pathWrapper = `/img/wrappers/1.png`
+    const pathWrapper = `/img/wrappers/${props.typeWrapperCard.path}`
 
     const classes = ['g-card']  // clicked, success-card, fail-card
     if (props.status) {
