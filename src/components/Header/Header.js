@@ -1,4 +1,5 @@
 import './Header.css'
+import Timer from 'react-compound-timer'
 
 const Header = ({score}) => (
     <header>
@@ -8,6 +9,7 @@ const Header = ({score}) => (
             <span>DES:&nbsp;</span>
             <span className="score-count">{score}</span>
         </div>
+        <div className="timer">Time <Timer.Minutes/>:<Timer.Seconds/></div>
     </header>
 )
 

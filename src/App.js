@@ -10,6 +10,7 @@ import {getStartArena} from './containers/arena/arena'
 import {getStartTable} from './containers/table/arena'
 import {getStartWrapperCard} from './containers/wrapperCard/wrapperCard'
 import {FullScreen, useFullScreenHandle} from "react-full-screen"
+import Timer from 'react-compound-timer'
 
 
 function App() {
@@ -34,10 +35,11 @@ function App() {
     return (
         <FullScreen handle={fullScreenHandler}>
             <div className="App" style={{backgroundImage: `url("/img/backgrounds/${typeArena.path}")`}}>
-                <Header
-                    score={score}
-                />
-                {showSettings &&
+                <Timer formatValue={(value) => `${(value < 10 ? `0${value}` : value)}`}>
+                    <Header
+                        score={score}
+                    />
+                    {showSettings &&
                     <Settings
                         hideSettings={() => setShowSettings(false)}
                         musicValue={musicValue}
@@ -53,22 +55,22 @@ function App() {
                         difficult={difficult}
                         changeDifficult={(difficult) => setDifficult(difficult)}
                     />
-                }
-                <Board
-                    typeBoard={typeTable}
-                    soundValue={soundValue}
-                    typeWrapperCard={typeWrapperCard}
-                    difficult={difficult}
-                    changeScore={()=>setScore((prev) => prev + 10)}
-                />
-                <button onClick={() => setStartGame(true)}>Start Game</button>
-                <Footer
-                    showSettings={() => setShowSettings(true)}
-                    stopGame={() => setStartGame(false)}
-                    startGame={startGame}
-                    fullScreenHandler={fullScreenHandler}
-                />
-
+                    }
+                    <Board
+                        typeBoard={typeTable}
+                        soundValue={soundValue}
+                        typeWrapperCard={typeWrapperCard}
+                        difficult={difficult}
+                        changeScore={()=>setScore((prev) => prev + 10)}
+                    />
+                    <button onClick={() => setStartGame(true)}>Start Game</button>
+                    <Footer
+                        showSettings={() => setShowSettings(true)}
+                        stopGame={() => setStartGame(false)}
+                        startGame={startGame}
+                        fullScreenHandler={fullScreenHandler}
+                    />
+                </Timer>
             </div>
         </FullScreen>
     );
