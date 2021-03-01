@@ -23,3 +23,19 @@
 .setting-card {
     margin: 10px;
 }
+
+.setting-card button {
+    margin: 1px;
+}
+
+.setting-card button:hover {
+    transition: .5s;
+    color: white;
+    background-color: #ffc107;
+}
+
+.setting-card button.active {
+    color: white;
+    background-color: #ffc107;
+    font-size: 20px;
+}

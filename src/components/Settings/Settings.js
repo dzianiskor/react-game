@@ -1,4 +1,5 @@
 import './Settings.css'
+import {getArenaList} from '../../containers/arena/arena'
 
 const Settings = (props) => {
     return (
@@ -17,11 +18,13 @@ const Settings = (props) => {
                     </div>
                 </div>
                 <div className="setting-card">
-                    <div>Type Cards: </div>
+                    <div>Type Arena: </div>
                     <div>
-                        <button>Type 1</button>
-                        <button>Type 2</button>
-                        <button>Type 3</button>
+                        {getArenaList().map((arena)=>
+                            (props.typeArena.id === arena.id)
+                                ? <button key={arena.id} className="active" onClick={()=>props.changeArena(arena)}>{arena.name}</button>
+                                : <button key={arena.id} onClick={()=>props.changeArena(arena)}>{arena.name}</button>
+                        )}
                     </div>
                 </div>
                 <div className="setting-card">
