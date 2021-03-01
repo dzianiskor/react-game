@@ -4,7 +4,6 @@ footer {
     display: flex;
     justify-content: space-between;
     margin: 10px auto;
-    width: 1320px;
 }
 .footer-links {
     display: flex;

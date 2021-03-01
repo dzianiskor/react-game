@@ -90,3 +90,27 @@
         transform: scale3d(1, 1, 1) rotateY(180deg);
     }
 }
+
+@media (max-width: 1340px) {
+    .g-card {
+        width: 120px;
+    }
+
+    .g-card img {
+        width: 120px;
+        height: 166px;
+    }
+}
+
+@media (max-width: 768px) {
+    .g-card {
+        width: 100px;
+    }
+
+    .g-card img {
+        width: 100px;
+        height: 138px;
+    }
+}
+
+

@@ -12,3 +12,15 @@
     align-items: center;
     justify-content: space-around;
 }
+
+@media (max-width: 1340px) {
+    .table-image {
+        width: 768px;
+    }
+}
+
+@media (max-width: 768px) {
+    .table-image {
+        width: 480px;
+    }
+}
