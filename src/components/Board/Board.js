@@ -2,8 +2,13 @@ import './Board.css'
 import Card from './Card/Card'
 import GuardBoard from './GuardBoard/GuardBoard'
 import {useState} from 'react'
+import useSound from 'use-sound'
+import successSound from '../../sounds/success.mp3'
+import failSound from '../../sounds/error.mp3'
 
 const Board = (props) => {
+    const [playSuccessSound] = useSound(successSound, {volume: props.soundValue});
+    const [playFailSound] = useSound(failSound, {volume: props.soundValue});
 
     const [cards, setCards] = useState([
         {id: 1, cardId: 1, status: ''},
@@ -49,16 +54,26 @@ const Board = (props) => {
         }, 1000)
     }
 
-    function compareCardsHandler({id, cardId}) {
+    function compareCardsHandler({id, cardId, status}) {
         setGuardBoardAllowed(false)
+        if (status === 'success-card') {
+            setGuardBoardAllowed(true)
+            return true
+        }
         changeStatus(id, 'clicked')
         if (!compareCard || compareCard.id === id) {
             setCompareCard({id, cardId})
         } else if (compareCard.cardId === cardId) {
             changeStatus(id, 'success-card')
+            setTimeout(() => {
+                playSuccessSound()
+            }, 1000)
             setCompareCard('')
         } else {
             changeStatus(id, 'fail-card')
+            setTimeout(() => {
+                playFailSound()
+            }, 1000)
             setCompareCard('')
         }
     }
@@ -74,6 +89,7 @@ const Board = (props) => {
                             cardId={card.cardId}
                             status={card.status}
                             compareCard={compareCardsHandler}
+                            volumeValue={props.soundValue}
                         />
                     ))}
                 </GuardBoard>

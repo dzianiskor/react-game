@@ -1,6 +1,12 @@
 import './Card.css'
+import useSound from 'use-sound'
+import clickSound from '../../../sounds/click.mp3'
+import hoverSound from '../../../sounds/hover.mp3'
 
 const Card = (props) => {
+    const [playClickSound] = useSound(clickSound, { volume: props.volumeValue });
+    const [playHoverSound] = useSound(hoverSound, { volume: props.volumeValue });
+
     const pathHero = `/img/heroes/${props.cardId}.png`
     const pathWrapper = `/img/wrappers/1.png`
 
@@ -10,7 +16,14 @@ const Card = (props) => {
     }
 
     return (
-        <div className={classes.join(' ')} onClick={() => props.compareCard(props)}>
+        <div
+            className={classes.join(' ')}
+            onClick={()=>{
+                playClickSound()
+                props.compareCard(props)
+            }}
+            onMouseEnter={playHoverSound}
+        >
             <div className="front">
                 <img src={pathWrapper} alt="Wrapper"/>
             </div>
