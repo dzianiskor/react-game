@@ -50,6 +50,7 @@ const Board = (props) => {
             changeStatus(id, 'success-card')
             setTimeout(() => {
                 playSuccessSound()
+                props.changeScore()
             }, 1000)
             setCompareCard('')
         } else {

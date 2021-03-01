@@ -25,6 +25,7 @@ function App() {
     const [playMusic, {stop}] = useSound(music, {volume: musicValue})
 
     const [soundValue, setSoundValue] = useState(0.25)
+    const [score, setScore] = useState(0)
 
     useEffect(() => {
         startGame ? playMusic() : stop()
@@ -33,7 +34,9 @@ function App() {
     return (
         <FullScreen handle={fullScreenHandler}>
             <div className="App" style={{backgroundImage: `url("/img/backgrounds/${typeArena.path}")`}}>
-                <Header/>
+                <Header
+                    score={score}
+                />
                 {showSettings &&
                     <Settings
                         hideSettings={() => setShowSettings(false)}
@@ -56,6 +59,7 @@ function App() {
                     soundValue={soundValue}
                     typeWrapperCard={typeWrapperCard}
                     difficult={difficult}
+                    changeScore={()=>setScore((prev) => prev + 10)}
                 />
                 <button onClick={() => setStartGame(true)}>Start Game</button>
                 <Footer
