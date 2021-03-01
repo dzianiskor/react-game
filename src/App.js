@@ -9,8 +9,11 @@ import Settings from './components/Settings/Settings'
 import {getStartArena} from './containers/arena/arena'
 import {getStartTable} from './containers/table/arena'
 import {getStartWrapperCard} from './containers/wrapperCard/wrapperCard'
+import { FullScreen, useFullScreenHandle } from "react-full-screen"
+
 
 function App() {
+    const fullScreenHandler = useFullScreenHandle();
     const [typeArena, setTypeArena] = useState(getStartArena())
     const [typeTable, setTypeTable] = useState(getStartTable())
     const [typeWrapperCard, setTypeWrapperCard] = useState(getStartWrapperCard())
@@ -29,6 +32,7 @@ function App() {
     }, [startGame, playMusic, stop])
 
     return (
+        <FullScreen handle={fullScreenHandler}>
         <div className="App" style={{backgroundImage: `url("/img/backgrounds/${typeArena.path}")`}}>
             <Header/>
             {showSettings &&
@@ -52,8 +56,11 @@ function App() {
                 showSettings={() => setShowSettings(true)}
                 stopGame={() => setStartGame(false)}
                 startGame={startGame}
+                fullScreenHandler={fullScreenHandler}
             />
+
         </div>
+        </FullScreen>
     );
 }
 
