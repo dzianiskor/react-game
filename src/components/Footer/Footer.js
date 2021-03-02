@@ -3,20 +3,18 @@ import './Footer.css'
 const Footer = ({showSettings, startGame, stopGame, fullScreenHandler}) => (
     <footer>
         <div className="button-group-wrapper">
-            {startGame &&
             <div>
                 <button className="btn setting-button" onClick={stopGame}>
-                    Stop Game
+                    <img src="/img/back.png" alt="back-menu"/>
                 </button>
             </div>
-            }
             <div className="button-group">
                 { (!fullScreenHandler.active)
                     ? (<button className="btn setting-button" onClick={fullScreenHandler.enter}>
-                        <img src="/img/full_screen1.png" alt="setting-button"/>
+                        <img src="/img/full_screen1.png" alt="full_screen"/>
                     </button>)
                     : (<button className="btn setting-button" onClick={fullScreenHandler.exit}>
-                        <img src="/img/full_screen2.png" alt="setting-button"/>
+                        <img src="/img/full_screen2.png" alt="full_screen"/>
                     </button>)
                 }
             </div>

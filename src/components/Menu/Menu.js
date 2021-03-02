@@ -5,9 +5,7 @@ const Menu = ({setStartGame}) => (
     <div className="menu-wrapper" style={{backgroundImage: `url("/img/backgrounds/8.jpg")`}}>
         <div className="menu">
             <div className="link" onClick={setStartGame}>
-                <NavLink
-                    to="/game"
-                >Start Game</NavLink>
+                <button>Start Game</button>
             </div>
             <div className="link">
                 <NavLink

@@ -8,15 +8,38 @@ import failSound from '../../sounds/error.mp3'
 import {getStartDeck} from '../../containers/deck/deck'
 
 const Board = (props) => {
-    const [playSuccessSound] = useSound(successSound, {volume: props.soundValue});
-    const [playFailSound] = useSound(failSound, {volume: props.soundValue});
+    const [playSuccessSound, playSuccessSoundDriver] = useSound(successSound, {volume: props.soundValue});
+    const [playFailSound, playFailSoundDriver] = useSound(failSound, {volume: props.soundValue});
     const [cards, setCards] = useState(getStartDeck(props.difficult))
     const [compareCard, setCompareCard] = useState('')
     const [guardBoardAllowed, setGuardBoardAllowed] = useState(true)
 
-    useEffect(()=>{
+    useEffect(() => {
         setCards(getStartDeck(props.difficult))
     }, [props.difficult])
+
+    useEffect(() => {
+        return () => {
+            playSuccessSoundDriver.stop()
+            playFailSoundDriver.stop()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [playSuccessSound, playFailSound])
+
+    function checkFinishGame() {
+        let counter = 0
+        cards.forEach((card) => {
+            if (card.status === 'success-card') {
+                counter++
+            }
+        })
+        if (cards.length - counter <= 2) {
+            setTimeout(()=>{
+                console.log('finish')
+                setCards(getStartDeck(props.difficult))
+            }, 5000)
+        }
+    }
 
     function changeStatus(id, status) {
         const newCards = [...cards];
@@ -53,6 +76,7 @@ const Board = (props) => {
                 props.changeScore()
             }, 1000)
             setCompareCard('')
+            checkFinishGame()
         } else {
             changeStatus(id, 'fail-card')
             setTimeout(() => {

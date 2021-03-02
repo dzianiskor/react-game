@@ -36,47 +36,52 @@ function App() {
 
     return (
         <FullScreen handle={fullScreenHandler}>
-            <Route path="/" exact render={()=> (<Menu setStartGame={()=>setStartGame(true)}/>)} />
-            <Route path="/statistics" exact render={()=> (<h1>Statistics</h1>)} />
-            <Route path="/game" exact render={() => (
-                <div className="App" style={{backgroundImage: `url("/img/backgrounds/${typeArena.path}")`}}>
-                    <Timer formatValue={(value) => `${(value < 10 ? `0${value}` : value)}`}>
-                        <Header
-                            score={score}
-                        />
-                        {showSettings &&
-                        <Settings
-                            hideSettings={() => setShowSettings(false)}
-                            musicValue={musicValue}
-                            changeMusicValue={e => setMusicValue(e.target.value / 100)}
-                            soundValue={soundValue}
-                            changeSoundValue={e => setSoundValue(e.target.value / 100)}
-                            typeArena={typeArena}
-                            changeArena={(arena) => setTypeArena(arena)}
-                            typeTable={typeTable}
-                            changeTable={(table) => setTypeTable(table)}
-                            typeWrapperCard={typeWrapperCard}
-                            changeWrapperCard={(wrapper) => setTypeWrapperCard(wrapper)}
-                            difficult={difficult}
-                            changeDifficult={(difficult) => setDifficult(difficult)}
-                        />
-                        }
-                        <Board
-                            typeBoard={typeTable}
-                            soundValue={soundValue}
-                            typeWrapperCard={typeWrapperCard}
-                            difficult={difficult}
-                            changeScore={()=>setScore((prev) => prev + 10)}
-                        />
-                        <Footer
-                            showSettings={() => setShowSettings(true)}
-                            stopGame={() => setStartGame(false)}
-                            startGame={startGame}
-                            fullScreenHandler={fullScreenHandler}
-                        />
-                    </Timer>
-                </div>
-            )} />
+            <Route path="/" exact render={() => {
+                return !startGame ? (
+                    <Menu setStartGame={() => setStartGame(true)}/>
+                ) : (
+                    <div className="App" style={{backgroundImage: `url("/img/backgrounds/${typeArena.path}")`}}>
+                        <Timer formatValue={(value) => `${(value < 10 ? `0${value}` : value)}`}>
+                            <Header
+                                score={score}
+                            />
+                            {showSettings &&
+                            <Settings
+                                hideSettings={() => setShowSettings(false)}
+                                musicValue={musicValue}
+                                changeMusicValue={e => setMusicValue(e.target.value / 100)}
+                                soundValue={soundValue}
+                                changeSoundValue={e => setSoundValue(e.target.value / 100)}
+                                typeArena={typeArena}
+                                changeArena={(arena) => setTypeArena(arena)}
+                                typeTable={typeTable}
+                                changeTable={(table) => setTypeTable(table)}
+                                typeWrapperCard={typeWrapperCard}
+                                changeWrapperCard={(wrapper) => setTypeWrapperCard(wrapper)}
+                                difficult={difficult}
+                                changeDifficult={(difficult) => setDifficult(difficult)}
+                            />
+                            }
+                            <Board
+                                typeBoard={typeTable}
+                                soundValue={soundValue}
+                                typeWrapperCard={typeWrapperCard}
+                                difficult={difficult}
+                                changeScore={() => setScore((prev) => prev + 10)}
+                                startGame={startGame}
+                            />
+                            <Footer
+                                showSettings={() => setShowSettings(true)}
+                                stopGame={() => setStartGame(false)}
+                                startGame={startGame}
+                                fullScreenHandler={fullScreenHandler}
+                            />
+                        </Timer>
+                    </div>
+                )
+            }}/>
+            <Route path="/statistics" exact render={() => (<h1>Statistics</h1>)}/>
+
         </FullScreen>
     );
 }
