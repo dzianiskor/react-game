@@ -15,7 +15,7 @@ const Login = (props) => {
                 let payload = {
                     code: newUrl[1],
                 };
-                let res = await axios.post('https://dzianiskor-react-game.herokuapp.com:5000/authenticate', payload);
+                let res = await axios.post('https://dzianiskor-react-game-server.herokuapp.com/authenticate', payload);
                 let data = res.data;
                 props.setUser(data)
                 props.setIsLogin()
