@@ -19,7 +19,7 @@ app.post("/authenticate", async (req, res) => {
         client_id: '601317d4e6d41de68937',
         client_secret: '94550998f8b08c48cf4f5b839a3d3dc21b7c62f4',
         code,
-        redirect_uri: 'http://localhost:3000/login',
+        redirect_uri: 'https://dzianiskor-react-game.herokuapp.com/login',
     })
     let params = new URLSearchParams(requestToken.data);
     const access_token = params.get("access_token");
