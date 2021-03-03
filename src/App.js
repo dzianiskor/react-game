@@ -13,7 +13,7 @@ import {FullScreen, useFullScreenHandle} from "react-full-screen"
 import Timer from 'react-compound-timer'
 import {Route} from 'react-router-dom'
 import Menu from './components/Menu/Menu'
-
+import Login from './components/Login/Login'
 
 function App() {
     const fullScreenHandler = useFullScreenHandle();
@@ -23,12 +23,15 @@ function App() {
     const [typeWrapperCard, setTypeWrapperCard] = useState(getStartWrapperCard())
     const [startGame, setStartGame] = useState(false)
     const [showSettings, setShowSettings] = useState(false)
-
     const [musicValue, setMusicValue] = useState(0.3)
     const [playMusic, {stop}] = useSound(music, {volume: musicValue})
-
     const [soundValue, setSoundValue] = useState(0.25)
     const [score, setScore] = useState(0)
+    const [user, setUser] = useState({
+        login: 'Player',
+        avatar: 'https://avatars.githubusercontent.com/u/45198847?v=4'
+    });
+    const [isLogin, setIsLogin] = useState(false)
 
     useEffect(() => {
         startGame ? playMusic() : stop()
@@ -36,14 +39,25 @@ function App() {
 
     return (
         <FullScreen handle={fullScreenHandler}>
+            <Route path="/Login" exact
+                   render={() => (
+                       <Login
+                           setUser={(user) => {
+                               setUser(user)
+                           }}
+                           setIsLogin = { () => setIsLogin(true)}
+                       />)
+                   }
+            />
             <Route path="/" exact render={() => {
                 return !startGame ? (
-                    <Menu setStartGame={() => setStartGame(true)}/>
+                    <Menu setStartGame={() => setStartGame(true)} isLogin={isLogin}/>
                 ) : (
                     <div className="App" style={{backgroundImage: `url("/img/backgrounds/${typeArena.path}")`}}>
                         <Timer formatValue={(value) => `${(value < 10 ? `0${value}` : value)}`}>
                             <Header
                                 score={score}
+                                user={user}
                             />
                             {showSettings &&
                             <Settings
@@ -81,7 +95,6 @@ function App() {
                 )
             }}/>
             <Route path="/statistics" exact render={() => (<h1>Statistics</h1>)}/>
-
         </FullScreen>
     );
 }
