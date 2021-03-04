@@ -13,3 +13,7 @@
     margin-right: 8px;
     filter: invert();
 }
+
+h1 {
+    color: white;
+}
