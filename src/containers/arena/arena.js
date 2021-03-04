@@ -1,3 +1,5 @@
+import {getSavedData} from '../saveGame/saveGame'
+
 export function getArenaList() {
     return [
         {id: 1, name: 'Fight', path: '1.jpg', active: false},
@@ -11,5 +13,7 @@ export function getArenaList() {
 }
 
 export function getStartArena() {
-    return getArenaList().find((arena)=> arena.active)
+    let savedArena = getSavedData('arena')
+
+    return (savedArena) ? savedArena : getArenaList().find((arena)=> arena.active)
 }

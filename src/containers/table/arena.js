@@ -1,3 +1,5 @@
+import {getSavedData} from '../saveGame/saveGame'
+
 export function getTableList() {
     return [
         {id: 1, name: 'Type 1', path: '1.jpg', active: true},
@@ -9,5 +11,7 @@ export function getTableList() {
 }
 
 export function getStartTable() {
-    return getTableList().find((table)=> table.active)
+    let savedTable = getSavedData('table')
+
+    return (savedTable) ? savedTable : getTableList().find((table)=> table.active)
 }

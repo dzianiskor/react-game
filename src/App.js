@@ -14,24 +14,27 @@ import Timer from 'react-compound-timer'
 import {Route} from 'react-router-dom'
 import Menu from './components/Menu/Menu'
 import Login from './components/Login/Login'
+import {getSavedData, setSavedData} from './containers/saveGame/saveGame'
 
 function App() {
     const fullScreenHandler = useFullScreenHandle();
-    const [difficult, setDifficult] = useState('hard')
+    const [difficult, setDifficult] = useState((getSavedData('difficult')) ? getSavedData('difficult') : 'hard')
     const [typeArena, setTypeArena] = useState(getStartArena())
     const [typeTable, setTypeTable] = useState(getStartTable())
     const [typeWrapperCard, setTypeWrapperCard] = useState(getStartWrapperCard())
-    const [startGame, setStartGame] = useState(false)
+    const [startGame, setStartGame] = useState((getSavedData('startGame')) ? getSavedData('startGame') : false)
     const [showSettings, setShowSettings] = useState(false)
     const [musicValue, setMusicValue] = useState(0.3)
     const [playMusic, {stop}] = useSound(music, {volume: musicValue})
     const [soundValue, setSoundValue] = useState(0.25)
-    const [score, setScore] = useState(0)
-    const [user, setUser] = useState({
-        login: 'Player',
-        avatar: 'https://avatars.githubusercontent.com/u/45198847?v=4'
-    });
-    const [isLogin, setIsLogin] = useState(false)
+    const [score, setScore] = useState((getSavedData('score')) ? getSavedData('score') : 0)
+    const [user, setUser] = useState(getSavedData('user'));
+    const [isLogin, setIsLogin] = useState(!!user)
+
+    useEffect(()=> {
+        //for local develop
+        //setSavedData('user', {login: 'Player',avatar: 'https://avatars.githubusercontent.com/u/45198847?v=4'})
+    }, [])
 
     useEffect(() => {
         startGame ? playMusic() : stop()
@@ -51,7 +54,10 @@ function App() {
             />
             <Route path="/" exact render={() => {
                 return !startGame ? (
-                    <Menu setStartGame={() => setStartGame(true)} isLogin={isLogin}/>
+                    <Menu setStartGame={() => {
+                        setStartGame(true)
+                        setSavedData('startGame', true)
+                    }} isLogin={isLogin}/>
                 ) : (
                     <div className="App" style={{backgroundImage: `url("/img/backgrounds/${typeArena.path}")`}}>
                         <Timer formatValue={(value) => `${(value < 10 ? `0${value}` : value)}`}>
@@ -81,12 +87,18 @@ function App() {
                                 soundValue={soundValue}
                                 typeWrapperCard={typeWrapperCard}
                                 difficult={difficult}
-                                changeScore={() => setScore((prev) => prev + 10)}
+                                changeScore={() => setScore((prev) => {
+                                    setSavedData('score', prev + 10)
+                                    return prev + 10
+                                })}
                                 startGame={startGame}
                             />
                             <Footer
                                 showSettings={() => setShowSettings(true)}
-                                stopGame={() => setStartGame(false)}
+                                stopGame={() => {
+                                    setStartGame(false)
+                                    setSavedData('startGame', false)
+                                }}
                                 startGame={startGame}
                                 fullScreenHandler={fullScreenHandler}
                             />

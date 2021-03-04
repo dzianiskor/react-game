@@ -6,16 +6,22 @@ import useSound from 'use-sound'
 import successSound from '../../sounds/success.mp3'
 import failSound from '../../sounds/error.mp3'
 import {getStartDeck} from '../../containers/deck/deck'
+import {getSavedData, setSavedData} from '../../containers/saveGame/saveGame'
 
 const Board = (props) => {
     const [playSuccessSound, playSuccessSoundDriver] = useSound(successSound, {volume: props.soundValue});
     const [playFailSound, playFailSoundDriver] = useSound(failSound, {volume: props.soundValue});
-    const [cards, setCards] = useState(getStartDeck(props.difficult))
+    const [cards, setCards] = useState((getSavedData('cards')) ? getSavedData('cards') : getStartDeck(props.difficult))
     const [compareCard, setCompareCard] = useState('')
     const [guardBoardAllowed, setGuardBoardAllowed] = useState(true)
+    const [firstRender, setFirstRender] = useState(true)
 
     useEffect(() => {
-        setCards(getStartDeck(props.difficult))
+        if (!firstRender) {
+            setCards(getStartDeck(props.difficult))
+        }
+        setFirstRender(false)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.difficult])
 
     useEffect(() => {
@@ -53,6 +59,7 @@ const Board = (props) => {
         } else {
             setTimeout(() => {
                 setCards(() => newCards)
+                setSavedData('cards', newCards)
             }, 1000)
         }
         setTimeout(() => {

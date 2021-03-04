@@ -1,3 +1,5 @@
+import {getSavedData} from '../saveGame/saveGame'
+
 export function getWrapperCardList() {
     return [
         {id: 1, name: 'Standard', path: '1.png', active: true},
@@ -10,5 +12,7 @@ export function getWrapperCardList() {
 }
 
 export function getStartWrapperCard() {
-    return getWrapperCardList().find((table)=> table.active)
+    let savedWrapper = getSavedData('wrapperCard')
+
+    return (savedWrapper) ? savedWrapper : getWrapperCardList().find((table)=> table.active)
 }

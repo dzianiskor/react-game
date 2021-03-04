@@ -2,6 +2,7 @@ import './Login.css'
 import {useEffect} from 'react'
 import axios from "axios"
 import { useHistory } from "react-router-dom"
+import {setSavedData} from '../../containers/saveGame/saveGame'
 
 const Login = (props) => {
     let history = useHistory();
@@ -18,6 +19,7 @@ const Login = (props) => {
                 let res = await axios.post('https://dzianiskor-react-game-server.herokuapp.com/authenticate', payload);
                 let data = res.data;
                 props.setUser(data)
+                setSavedData('user', data)
                 props.setIsLogin()
                 history.push('/')
             })()
