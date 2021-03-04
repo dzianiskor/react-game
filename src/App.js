@@ -15,6 +15,7 @@ import {Route} from 'react-router-dom'
 import Menu from './components/Menu/Menu'
 import Login from './components/Login/Login'
 import {getSavedData, setSavedData} from './containers/saveGame/saveGame'
+import Statistics from './components/Statistics/Statistics'
 
 function App() {
     const fullScreenHandler = useFullScreenHandle();
@@ -39,6 +40,18 @@ function App() {
     useEffect(() => {
         startGame ? playMusic() : stop()
     }, [startGame, playMusic, stop])
+
+    function finishedGame() {
+        let statistics = getSavedData('statistics') ? getSavedData('statistics') : []
+        statistics.push(
+            {
+                id: statistics.length + 1,
+                ...user,
+                score: score + 10,
+            }
+        )
+        setSavedData('statistics', statistics)
+    }
 
     return (
         <FullScreen handle={fullScreenHandler}>
@@ -92,6 +105,7 @@ function App() {
                                     return prev + 10
                                 })}
                                 startGame={startGame}
+                                finishedGame={finishedGame}
                             />
                             <Footer
                                 showSettings={() => setShowSettings(true)}
@@ -106,7 +120,7 @@ function App() {
                     </div>
                 )
             }}/>
-            <Route path="/statistics" exact render={() => (<h1>Statistics</h1>)}/>
+            <Route path="/statistics" exact component={Statistics}/>
         </FullScreen>
     );
 }

@@ -42,6 +42,7 @@ const Board = (props) => {
         if (cards.length - counter <= 2) {
             setTimeout(()=>{
                 console.log('finish')
+                props.finishedGame()
                 setCards(getStartDeck(props.difficult))
             }, 5000)
         }
