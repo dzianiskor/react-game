@@ -16,7 +16,7 @@ const Staticstics = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {statistics.map((statistic, index)=> (
+                    {statistics && statistics.map((statistic, index)=> (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
                             <td>{statistic.login}</td>
