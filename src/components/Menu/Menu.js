@@ -1,14 +1,28 @@
 import './Menu.css'
 import {NavLink} from 'react-router-dom'
 import {useEffect} from 'react'
-import { useHistory } from "react-router-dom"
+import {useHistory} from "react-router-dom"
 
 const Menu = ({setStartGame, isLogin}) => {
     let history = useHistory();
-    useEffect(()=>{
-        if(!isLogin){
+    useEffect(() => {
+        if (!isLogin) {
             history.push('/login')
         }
+
+        function handleKeyUp(event) {
+            // eslint-disable-next-line
+            switch (event.code) {
+                case 'Enter' :
+                    setStartGame()
+                    break
+                case 'KeyS':
+                    history.push('/statistics')
+                    break
+            }
+        }
+        window.addEventListener("keyup", handleKeyUp)
+        return () => window.removeEventListener("keyup", handleKeyUp)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return (
