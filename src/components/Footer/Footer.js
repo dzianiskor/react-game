@@ -47,8 +47,8 @@ const Footer = ({showSettings, stopGame, fullScreenHandler}) => {
                 </div>
             </div>
             <div className="footer-links">
-                <span><a href='https://github.com/dzianiskor'>GitHub</a></span>
-                <span><a href='https://www.youtube.com/'>YouTube</a></span>
+                <span><a href='https://github.com/dzianiskor/react-game'>GitHub</a></span>
+                <span><a href='https://www.youtube.com/watch?v=Z4ClOMxCYy8'>YouTube</a></span>
                 <span><a href='https://rs.school/js/'>RS.School</a></span>
                 <span>© 2021</span>
             </div>
